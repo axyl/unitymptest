@@ -7,9 +7,18 @@ public class PlayerMove : NetworkBehaviour {
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    /// <summary>
+    /// Executes if the object is local only... (not networked)
+    /// </summary>
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+        GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         if (!isLocalPlayer) return;
 
