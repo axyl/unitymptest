@@ -1,0 +1,2 @@
+﻿using UnityEngine;using System.Collections;public class Combat : MonoBehaviour {    // Public variables..    public const int maxHealth = 100;   //const - can't be changed.
+    public int health = maxHealth;    // Public method called by the bullet.    public void TakeDamage(int amount)    {        health -= amount;        if (health< 0)        {            health = 0;            Debug.Log("Dead");        }    }        // Use this for initialization	void Start () {		}		// Update is called once per frame	void Update () {		}}
