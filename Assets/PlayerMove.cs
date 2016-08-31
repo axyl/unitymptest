@@ -31,18 +31,18 @@ public class PlayerMove : NetworkBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Fire();
+            // The code is running on the client, but this function is executed on the server.
+            CmdFire();
         }
 	}
 
     /// <summary>
-    /// Fire method if player is firing...
-    /// 
-    /// Called by Update if the user has pressed the fire button
-    /// 
+    /// Fire method if player is firing... run on the server.
     /// </summary>
-    void Fire()
+    [Command]
+    void CmdFire()
     {
+        // Running on the server.
         // Create the new bullet object from the prefab...
         var bullet = (GameObject)Instantiate(
             bulletPrefab,   
@@ -51,6 +51,9 @@ public class PlayerMove : NetworkBehaviour {
 
         // Give it some velocity away from the player...
         bullet.GetComponent<Rigidbody>().velocity = -transform.forward * 4;
+
+        // Spawn the bullet object on all clients.
+        NetworkServer.Spawn(bullet);
 
         // Destroy the bullet after two seconds  - What if it's already destroyed?
         Destroy(bullet, 2.0f);
