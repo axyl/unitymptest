@@ -27,13 +27,18 @@ public class PlayerMove : NetworkBehaviour {
         var x = Input.GetAxis("Horizontal") * 0.1f;
         var z = Input.GetAxis("Vertical") * 0.1f;
 
-        transform.Translate(x, 0, z);	
+        transform.Translate(x, 0, z);
+
+        // Move the camera to track too.  This can't be the best way!
+        //Camera.main.transform.parent = transform;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // The code is running on the client, but this function is executed on the server.
             CmdFire();
         }
+        
+        
 	}
 
     /// <summary>
