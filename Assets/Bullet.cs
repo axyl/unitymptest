@@ -19,13 +19,11 @@ public class Bullet : MonoBehaviour {
         var hit = collision.gameObject;
         
         // Get the PlayerMove component from the object...if it's a player....otherwise it will be null
-        var hitPlayer = hit.GetComponent<PlayerMove>();
+        var hitCombat = hit.GetComponent<Combat>();
         // If it's not null....
-        if (hitPlayer!= null)
+        if (hitCombat!= null)
         {
-            var combat = hit.GetComponent<Combat>();
-            // Call the player object's combat object's takeDamage to .... a duh
-            combat.TakeDamage(10);
+            hitCombat.TakeDamage(10);
 
             // Delete the bullet.  This will be destroy bullets on each client, because they were spawned by the network.
             Destroy(gameObject);

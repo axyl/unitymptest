@@ -5,9 +5,9 @@ public class Combat : NetworkBehaviour {
 
     // Public variables..
     public const int maxHealth = 100;   //const - can't be changed.
+    public bool destroyOnDeath;
     [SyncVar]       // Synchronise this value between all clients and server.
     public int health = maxHealth;
-
 
     // Public method called by the bullet.
     public void TakeDamage(int amount)
@@ -22,9 +22,15 @@ public class Combat : NetworkBehaviour {
         if (health< 0)
         {
             Debug.Log("Dead");
-            health = maxHealth;
-            // This will be invoked on all clients.
-            RpcRespawn();
+            if (destroyOnDeath)
+            {
+                Destroy(gameObject);
+            } else
+            {
+                health = maxHealth;
+                // This will be invoked on all clients.
+                RpcRespawn();
+            }
         }
     }
 
